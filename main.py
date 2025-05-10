@@ -27,24 +27,25 @@ def get_link(id, title=False):
 
 
 url = ' https://hacker-news.firebaseio.com/v0/topstories.json'
-no_of_items_to_fetch = int(input("No of top news stories to fetch: "))
+try:
+    no_of_items_to_fetch = int(input("No of top news stories to fetch: "))
+except:
+    raise Exception("Enter a proper number")
+get_title = input("Get Title y/n ")
 stories_id = get_top_10(url, no_of_items_to_fetch)
 
 
 
 print(stories_id)
 
-for i in stories_id:
-    try:
-        
-        link = get_link(i, title=False)
-        print(link)
-        # print("Description: " ,link[1])
-        # print()e
-    except:
-        # print()
-#     except: # Need some Error Handling and what to do when such things creep on the top page of Hackernews.
-        print("id = ", i)
+if get_title == 'y':
+    for i in stories_id:
+        the_link, title_stuff = get_link(i, title=True)
+        print("Description: ", title_stuff, "\n","url: ", the_link)
 
+elif get_title == 'n':
+    for i in stories_id:
+        print(get_link(i, title=False))
 
-
+else:
+    print("Invalid Choice Please run again. ")
